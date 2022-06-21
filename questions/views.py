@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import ThemesForm, TagsForm
+from .forms import ThemesForm, TagsForm, QuestionsForm, AnswersForm
 
 def home(request):
     question_list = Question.objects.all()
@@ -14,13 +14,35 @@ def home(request):
     return render(request, 'questions/dashboard.html', context)
 
 def questions(request):
+    questions = Question.objects.all()
+    context = {'questions':questions}
+    return render(request, 'questions/questions.html', context)
 
-    return HttpResponse("Pagina questions")
+def manage_questions(request,pk=0):
+    if pk == 0: #create  
+        questions = None                      
+    else: #update
+        questions = Question.objects.get(id=pk)
+    form = QuestionsForm(instance=questions)                         
+    if request.method == 'POST':
+        form = QuestionsForm(request.POST, instance=questions)
+        if form.is_valid():
+            form.save()
+            return redirect("/questions/")
+    context = {'form':form}
+    return render(request, 'questions/form.html', context)
+
+def delete_questions(request, pk):
+    questions = Question.objects.get(id=pk)
+    context = {'item':questions}
+    if request.method == 'POST':
+        questions.delete()
+        return redirect("/questions/")
+    return render(request, 'questions/del_questions.html', context)
 
 def themes(request):
     themes = Theme.objects.all()
     context = {'themes':themes}
-
     return render(request, 'questions/themes.html', context)
 
 # def create_themes(request, pk=0):
@@ -95,3 +117,32 @@ def delete_tags(request, pk):
         tags.delete()
         return redirect("/tags/")
     return render(request, 'questions/del_tags.html', context)
+
+def answers(request, pk):
+    questions = Question.objects.get(id=pk)    
+    answers  = questions.answer_set.all()
+    context = {'questions':questions,'answers':answers}
+    return render(request, 'questions/answers.html', context)
+
+def manage_answers(request,pk,sk=0):
+    if sk == 0: #create  
+        answers = None                      
+    else: #update
+        answers = Answer.objects.get(id=sk)
+    form = AnswersForm(instance=answers)                         
+    if request.method == 'POST':
+        form = AnswersForm(request.POST, instance=answers)
+        if form.is_valid():
+            form.save()
+            return redirect("/answers/" + pk)
+    context = {'form':form}
+    return render(request, 'questions/form.html', context)
+
+
+def delete_answers(request, pk):
+    answers = Answer.objects.get(id=pk)
+    context = {'item':answers}
+    if request.method == 'POST':
+        answers.delete()
+        return redirect("/answers/" + str(answers.question.id))
+    return render(request, 'questions/del_answers.html', context)    

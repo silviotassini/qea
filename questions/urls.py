@@ -12,4 +12,12 @@ urlpatterns = [
     path('man_tags/', views.manage_tags, name="create_tags"),
     path('man_tags/<str:pk>', views.manage_tags, name="update_tags"),
     path('del_tags/<str:pk>', views.delete_tags, name="delete_tags"),
+    path('questions/', views.questions, name="questions"),
+    path('man_questions/', views.manage_questions, name="create_questions"),
+    path('man_questions/<str:pk>', views.manage_questions, name="update_questions"),
+    path('del_questions/<str:pk>', views.delete_questions, name="delete_questions"),
+    path('answers/<str:pk>', views.answers, name="answers"), 
+    path('man_answers/<str:pk>', views.manage_answers, name="create_answers"),    
+    path('man_answers/<str:pk>/<str:sk>', views.manage_answers, name="update_answers"),
+    path('del_answers/<str:pk>', views.delete_answers, name="delete_answers"),   
 ]

@@ -1,0 +1,33 @@
+{% extends 'questions/main.html' %}
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+                <h2>Questions</h2>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr><th>{{ questions.asksource }}</th><th></th></tr>
+                <tr><th>{{ questions.asktext }}</th><th></th></tr>                
+                <tr><td><a class="btn btn-sm btn-info" href="{% url 'create_answers' questions.id %}">Create a new Answer</a> </td><td></td></tr> 
+                {% for item in answers %}
+                    <tr>
+                        <td>
+                            {{ item.answertext|truncatewords:20  }}
+                            {% if item.iscorrect %}
+                                (correct)
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="{% url 'update_answers' questions.id item.id %}">Update</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'delete_answers' item.id  %}">Del</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

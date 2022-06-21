@@ -1,0 +1,28 @@
+{% extends 'questions/main.html' %}
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+                <h2>Questions</h2>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr><th>Question text</th><th></th></tr>
+
+                {% for item in questions %}
+                    <tr>
+                        <td>{{ item.asktext|truncatewords:20  }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="{% url 'answers' item.id %}">Answers</a>
+                            <a class="btn btn-sm btn-info" href="{% url 'update_questions' item.id %}">Update</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'delete_questions' item.id  %}">Del</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
