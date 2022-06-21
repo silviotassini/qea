@@ -9,10 +9,16 @@
         </div>
         <div class="card card-body">
             <table class="table">
-                <tr><th>Theme</th></tr>
+                <tr><th>Theme</th><th></th></tr>
 
                 {% for item in themes %}
-                    <tr><td>{{ item.theme }}</td></tr>
+                    <tr>
+                        <td>{{ item.theme }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="{% url 'update_themes' item.id %}">Update</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'delete_themes' item.id  %}">Del</a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </table>
         </div>

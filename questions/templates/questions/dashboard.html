@@ -11,14 +11,18 @@
 		<h5>Themes:</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create theme</a>
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_themes' %}">Create theme</a>
 			<table class="table table-sm">
 				<tr>
-					<th></th>
 					<th>Theme</th>
 					<th># questions</th>
 				</tr>
-				
+                {% for item in themes_list %}
+                    <tr>
+						<td>{{ item.theme }}</td>
+						<td>...</td>
+					</tr>
+                {% endfor %}
 			</table>
 		</div>
 	</div>
@@ -32,10 +36,15 @@
 				<tr>
 					<th>Theme</th>
 					<th>Question</th>
-					<th>Status</th>
 					<th>Update</th>
 					<th>Remove</th>
-					
+				</tr>
+                {% for item in question_list %}
+                    <tr><td>{{ item.asktext|truncatewords:2  }}</td>
+						<td>{{ item.asktext|truncatewords:10  }}</td>
+						<td></td>
+						<td></td></tr>
+                {% endfor %}
 			</table>
 		</div>
 	</div>

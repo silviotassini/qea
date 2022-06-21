@@ -1,0 +1,28 @@
+{% extends 'questions/main.html' %}
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+                <h2>Tags</h2>
+                <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_tags' %}">Create tag</a>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr><th>Tags</th><th></th></tr>
+
+                {% for item in tags %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="{% url 'update_tags' item.id %}">Update</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'delete_tags' item.id  %}">Del</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
