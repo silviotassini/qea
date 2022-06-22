@@ -1,1 +1,3 @@
 .wenv/
+db.sqlite*
+*.pyc
