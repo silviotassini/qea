@@ -126,9 +126,12 @@ def answers(request, pk):
 
 def manage_answers(request,pk,sk=0):
     if sk == 0: #create  
-        answers = None                      
+        question = Question.objects.get(id=pk)
+        answers = Answer(question=question) 
+        print("entrou 1")
     else: #update
         answers = Answer.objects.get(id=sk)
+        print("entrou 2")
     form = AnswersForm(instance=answers)                         
     if request.method == 'POST':
         form = AnswersForm(request.POST, instance=answers)

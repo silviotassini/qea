@@ -9,7 +9,7 @@ admin.site.register(Note)
 admin.site.register(QuestionTag)
 admin.site.register(Tag)
 
-class QuestionAdmin(admin.ModelAdmin):
+""" class QuestionAdmin(admin.ModelAdmin):
     fields = ['theme','asktext']
-    list_display=['theme','asktext','date_created']
-admin.site.register(Question, QuestionAdmin)
+    list_display=['theme','asktext','date_created'] """
+admin.site.register(Question)#, QuestionAdmin)
