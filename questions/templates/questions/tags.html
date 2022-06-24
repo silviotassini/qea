@@ -6,10 +6,11 @@
     <div class="col-md">
         <div class="card card-body">
                 <h2>Tags</h2>
-                <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_tags' %}">Create tag</a>
+                <br>
+                <a class="btn btn-sm btn-info" href="{% url 'create_tags' %}">Create tag</a>
         </div>
         <div class="card card-body">
-            <table class="table">
+            <table class="table table-hover table-sm">
                 <tr><th>Tags</th><th></th></tr>
 
                 {% for item in tags %}

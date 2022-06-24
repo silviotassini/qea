@@ -1,23 +1,24 @@
 {% extends 'questions/main.html' %}
 {% block content %}
-
+{% load static%}
 <br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-                <h2>Questions</h2>
+                <h2>Question</h2>
+                <p>{{ questions.asksource }}</p>
+                <p><b>{{ questions.asktext }}</b></p>
+                <br>
+                <a class="btn btn-sm btn-info" href="{% url 'create_answers' questions.id %}">Create a new Answer</a>
         </div>
         <div class="card card-body">
-            <table class="table">
-                <tr><th>{{ questions.asksource }}</th><th></th></tr>
-                <tr><th>{{ questions.asktext }}</th><th></th></tr>                
-                <tr><td><a class="btn btn-sm btn-info" href="{% url 'create_answers' questions.id %}">Create a new Answer</a> </td><td></td></tr> 
+            <table class="table table-hover table-sm">      
                 {% for item in answers %}
                     <tr>
                         <td>
                             {{ item.answertext|truncatewords:20  }}
                             {% if item.iscorrect %}
-                                (correct)
+                            <font color="#ff0000">(correct)</font>
                             {% endif %}
                         </td>
                         <td>
