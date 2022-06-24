@@ -1,5 +1,4 @@
 ```mermaid
-
 classDiagram
     Theme <|-- Question
     class Theme{
@@ -41,4 +40,4 @@ classDiagram
     class Tag{
       + name CharField
     } 
-    ```
+```

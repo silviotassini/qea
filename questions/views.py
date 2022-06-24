@@ -1,3 +1,4 @@
+from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
@@ -128,18 +129,16 @@ def manage_answers(request,pk,sk=0):
     if sk == 0: #create  
         question = Question.objects.get(id=pk)
         answers = Answer(question=question) 
-        print("entrou 1")
     else: #update
         answers = Answer.objects.get(id=sk)
-        print("entrou 2")
-    form = AnswersForm(instance=answers)                         
+    form = AnswersForm(instance=answers) 
     if request.method == 'POST':
         form = AnswersForm(request.POST, instance=answers)
         if form.is_valid():
             form.save()
             return redirect("/answers/" + pk)
     context = {'form':form}
-    return render(request, 'questions/form.html', context)
+    return render(request, 'questions/form2.html', context)
 
 
 def delete_answers(request, pk):
