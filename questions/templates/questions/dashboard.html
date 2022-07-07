@@ -18,10 +18,10 @@
 						<th># questions</th>
 					</tr>
 				</thead>
-                {% for item in themes_list %}
+                {% for k, v in qtc.items %}
                     <tr>
-						<td>{{ item.theme }}</td>
-						<td>...</td>
+						<td>{{ k }}</td>
+						<td>{{ v }}</td>
 					</tr>
                 {% endfor %}
 			</table>

@@ -1,6 +1,8 @@
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.forms import inlineformset_factory
+from django.db.models import Count
 from .models import *
 from .forms import ThemesForm, TagsForm, QuestionsForm, AnswersForm
 
@@ -8,10 +10,14 @@ def home(request):
     question_list = Question.objects.all()
     themes_list = Theme.objects.all()
     themes_count = themes_list.count()
+    Question_themes_count = themes_list.annotate(Count('question'))
+    qtc = {}
+    for item in Question_themes_count.values():
+        qtc[item['theme']]= item['question__count']
     question_count = question_list.count()
     tags_count = Tag.objects.all().count()
-    context = {'question_list':question_list, 'themes_list':themes_list,'themes_count':themes_count,
-    'question_count':question_count,'tags_count':tags_count}
+    context = {'question_list':question_list, 'themes_count':themes_count,
+    'question_count':question_count,'tags_count':tags_count,'qtc':qtc}
     return render(request, 'questions/dashboard.html', context)
 
 def questions(request):
@@ -126,18 +132,25 @@ def answers(request, pk):
     return render(request, 'questions/answers.html', context)
 
 def manage_answers(request,pk,sk=0):
-    if sk == 0: #create  
-        question = Question.objects.get(id=pk)
+    question = Question.objects.get(id=pk)
+    question_text = question.asktext
+    if sk == 0: #create          
         answers = Answer(question=question) 
     else: #update
         answers = Answer.objects.get(id=sk)
-    form = AnswersForm(instance=answers) 
+        
+    AnswerFormSet = inlineformset_factory(Question, Answer, form=AnswersForm, max_num=5, extra=4, can_delete=False)
+    form = AnswerFormSet(instance=question)
+    #form = AnswersForm(instance=answers) 
     if request.method == 'POST':
-        form = AnswersForm(request.POST, instance=answers)
+        #form = AnswersForm(request.POST, instance=answers)        
+        form = AnswerFormSet(request.POST, instance=question)
         if form.is_valid():
             form.save()
             return redirect("/answers/" + pk)
-    context = {'form':form}
+        else:
+            print(form.errors)
+    context = {'form':form, 'question_text':question_text}
     return render(request, 'questions/form2.html', context)
 
 

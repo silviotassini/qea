@@ -1,9 +1,15 @@
 {% extends 'questions/main.html' %}
 {% block content %}
-
+<div class="card card-body">
+{{ question_text|linebreaks }}
+</div>
+<br>
 <form action="" method="post">
     {% csrf_token %}
-    {{form.as_p}}
+    {{ form.management_form }}
+    {%for item in form %}
+        {{ item }}<br>
+    {% endfor %}
     <input type="submit" name="Submit">
 </form>
 {% endblock %}

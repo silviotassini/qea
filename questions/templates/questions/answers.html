@@ -7,8 +7,7 @@
         <div class="card card-body">
                 <h2>Question</h2>
                 <p>{{ questions.asksource }}</p>
-                <p><b>{{ questions.asktext }}</b></p>
-                <br>
+                <p><b>{{ questions.asktext|linebreaks }}</b></p>                
                 <a class="btn btn-sm btn-info" href="{% url 'create_answers' questions.id %}">Create a new Answer</a>
         </div>
         <div class="card card-body">
